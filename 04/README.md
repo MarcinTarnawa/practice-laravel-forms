@@ -4,7 +4,9 @@
 
 # `#04` Laravel:  Eloquent (16-19)
 
-Dodaj do rozwiązania możliwość edycji oraz usuwania wydatków. Jeśli do tej pory jeszcze nie zrobiłeś widoku z listą wszystkich elementów to jest to odpowiednie moment, aby to zrobić.
+Dodaj do rozwiązania możliwość edycji oraz usuwania wydatków. 
+
+Jeśli do tej pory jeszcze nie zrobiłeś widoku z listą wszystkich elementów to jest to odpowiednie moment, aby to zrobić.
 
 
 &nbsp;
