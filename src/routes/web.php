@@ -3,6 +3,7 @@
 use App\Models\Category;
 use App\Models\Expenses;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 //Index
 Route::get('/', function () {
@@ -38,21 +39,25 @@ Route::get('/expenses/create', function () {
 
 // 3. ZAPISYWANIE NOWEGO WYDATKU
 Route::post('/expenses', function () {
-    request()->validate([
+    $validated = request()->validate([
         'description' => ['required', 'string', 'min:3', 'max:255'],
         'amount' => 'required',
         'date' => 'required',
         'category' => ['required' , 'string']
     ]);
 
+    $categoryName = strtolower(trim($validated['category']));
+
+    $slug = Str::slug($categoryName, '-');
+
     $category = Category::firstOrCreate([
-        'name' => request('category')
+        'name' => $slug
     ]);
 
     Expenses::create([
-        'description' => request('description'),
-        'amount' => request('amount'),
-        'date' => request('date'),
+        'description' => $validated['description'],
+        'amount' => $validated['amount'],
+        'date' => $validated['date'],
         'category_id' => $category->id 
     ]);
 
@@ -80,8 +85,12 @@ Route::patch('/expenses/{expense}', function (Expenses $expense) {
         'category'    => 'required|string'
     ]);
 
+    $categoryName = strtolower(trim($data['category']));
+
+    $slug = Str::slug($categoryName, '-');
+
     $category = Category::firstOrCreate([
-        'name' => $data['category']
+        'name' => $slug
     ]);
 
     $expense->update([
